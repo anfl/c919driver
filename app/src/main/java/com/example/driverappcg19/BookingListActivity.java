@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -21,12 +22,16 @@ import com.google.firebase.database.ValueEventListener;
 
 public class BookingListActivity extends AppCompatActivity implements OnBookingAccepted{
     RecyclerView recyclerView;
+    ShimmerFrameLayout shimmerFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_list);
         recyclerView=findViewById(R.id.recyclerview);
+        shimmerFrameLayout = findViewById(R.id.shimmer_view_container);
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Bookings");
         Query query = myRef;
@@ -50,6 +55,7 @@ public class BookingListActivity extends AppCompatActivity implements OnBookingA
             protected void onBindViewHolder(final MainViewHolder holder, final int position, final NewsFeedData model) {
                 //Do settext here
                 final OnBookingAccepted onBookingAccepted=BookingListActivity.this;
+                shimmerFrameLayout.setVisibility(View.GONE);
                 holder.inflate(model,getApplicationContext());
                 holder.accept.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,6 +128,8 @@ public class BookingListActivity extends AppCompatActivity implements OnBookingA
 
     @Override
     protected void onResume() {
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
         super.onResume();
     }
 }

@@ -1,11 +1,13 @@
 package com.example.driverappcg19;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -36,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -61,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Enter Password",Toast.LENGTH_SHORT).show();
                 } else {
                     signup.setVisibility(View.GONE);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(login.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
                     progressBar.setVisibility(View.VISIBLE);
                     login.setText("Logging in...");
                     Handler handler = new Handler();

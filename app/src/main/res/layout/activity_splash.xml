@@ -7,9 +7,9 @@
     tools:context=".SplashActivity">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/centerlayout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,18 +18,29 @@
             android:text="Smart Mobile Laundry"
             android:textColor="@color/colorBlack"
             android:id="@+id/splash_txt"
-            android:layout_centerHorizontal="true"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/amita"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/montserrat"
             />
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/centerlayout"
+        android:layout_centerInParent="true">
+
+
 
         <ImageView
             android:layout_width="100dp"
             android:id="@+id/splash_icon"
             android:layout_centerHorizontal="true"
             android:layout_height="100dp"
-            android:layout_below="@+id/splash_txt"
             android:src="@drawable/dlogo4" />
 
 
@@ -40,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="30dp"
         app:LoadingDots_auto_play="true"
         app:LoadingDots_dots_color="@color/colorPrimary"
         app:LoadingDots_dots_count="5"

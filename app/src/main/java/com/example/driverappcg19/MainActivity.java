@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,9 +25,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 import com.google.zxing.Result;
 import com.here.android.mpa.common.GeoCoordinate;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +46,17 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  */
 
 public class MainActivity extends AppCompatActivity  {
+
+    String url1 = "https://wse.api.here.com/2/findsequence.json ?start=Berlin-Main-Station;52.52282,13.37011 &destination1=East-Side-Gallery;52.50341,13.44429 &destination2=Olympiastadion;52.51293,13.24021 &end=HERE-Berlin-Campus;52.53066,13.38511 &mode=fastest;car;&app_id= Q2PXMfWkluvQttaqa0Gi &app_code=vlrjsQAWKFWhTxCJ-1dWdg";
+    String url2="https://weather.api.here.com/weather/1.0/report.json" +
+            "?app_id=Q2PXMfWkluvQttaqa0Gi" +
+            "&app_code=vlrjsQAWKFWhTxCJ-1dWdg" +
+            "&product=observation" +
+            "&name=Berlin";
+
+    String url ="https://weather.api.here.com/weather/1.0/report.json?app_id=Q2PXMfWkluvQttaqa0Gi&app_code=vlrjsQAWKFWhTxCJ-1dWdg&product=observation&name=Chrompet";
+
+
 
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private static final String[] RUNTIME_PERMISSIONS = {
@@ -57,6 +77,7 @@ public class MainActivity extends AppCompatActivity  {
     int check=0;
     ProgressBar pgbar;
     TextView getdirections;
+    FloatingActionButton locate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +88,51 @@ public class MainActivity extends AppCompatActivity  {
         String lng=getIntent().getExtras().getString("long");
         toolbar = findViewById(R.id.toolbar);
         pgbar = findViewById(R.id.pg_bar);
+        pgbar.setVisibility(View.VISIBLE);
+        locate = findViewById(R.id.locate);
+        locate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                JsonObjectRequest deleteNoticeRequest = new JsonObjectRequest(Request.Method.GET, url,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    JSONObject observations = response.getJSONObject("observations");
+
+                                    JSONArray location = observations.getJSONArray("location");
+
+                                    JSONObject observation = location.getJSONObject(0);
+//                                    JSONObject observation = (JSONObject) location.get(0);
+
+                                    Log.d("Dataas",observation.toString());
+
+
+//                                    String daylight = (String) observation.get("daylight");
+//                                    JSONObject description = observation.getJSONObject("description");
+
+                                    Log.d("Dataas",observation.getString("daylight"));
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.d("Error",e.getMessage());
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+                queue.add(deleteNoticeRequest);
+
+            }
+        });
+
 
         getdirections = findViewById(R.id.get_directions);
         getdirections.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +243,8 @@ public class MainActivity extends AppCompatActivity  {
     private void setupMapFragmentView() {
         // All permission requests are being handled. Create map fragment view. Please note
         // the HERE SDK requires all permissions defined above to operate properly.
-        m_mapFragmentView = new MapFragmentView(this,l1,l2 );
+
+        m_mapFragmentView = new MapFragmentView(this,l1,l2,pgbar);
     }
 
     @Override
@@ -215,6 +282,8 @@ public class MainActivity extends AppCompatActivity  {
 
 
     }
+
+
 
 
 }

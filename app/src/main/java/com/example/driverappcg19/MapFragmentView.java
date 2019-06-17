@@ -46,6 +46,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,10 +72,12 @@ public class MapFragmentView {
     TextView instructionText,speedText;
     PositioningManager posManager;
     boolean paused;
-    public MapFragmentView(AppCompatActivity activity, Double l1, Double l2) {
+    ProgressBar progressBar;
+    public MapFragmentView(AppCompatActivity activity, Double l1, Double l2, ProgressBar pgbar) {
         m_activity = activity;
         this.l1=l1;
         this.l2=l2;
+        progressBar = pgbar;
         initMapFragment();
 
         t1=new TextToSpeech(m_activity, new TextToSpeech.OnInitListener() {
@@ -122,6 +125,8 @@ public class MapFragmentView {
 
         boolean success = com.here.android.mpa.common.MapSettings.setIsolatedDiskCacheRootPath(diskCacheRoot, "enna");
         if (!success) {
+
+            progressBar.setVisibility(View.GONE);
             // Setting the isolated disk cache was not successful, please check if the path is valid and
             // ensure that it does not match the default location
             // (getExternalStorageDirectory()/.here-maps).
@@ -143,6 +148,7 @@ public class MapFragmentView {
                                         PositioningManager.LocationMethod.GPS_NETWORK);
                             }
                             m_map = m_mapFragment.getMap();
+                            progressBar.setVisibility(View.GONE);
 
                             m_map.setTrafficInfoVisible(true);
                             posManager.addListener(
@@ -157,6 +163,7 @@ public class MapFragmentView {
                             Toast.makeText(m_activity,
                                     "ERROR: Cannot initialize Map with error " + error,
                                     Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });

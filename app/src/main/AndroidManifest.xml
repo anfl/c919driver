@@ -30,11 +30,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Scanner_Activity"></activity>
+        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".Scanner_Activity" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <activity android:name=".BookingListActivity" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".BookingListActivity"
+            android:theme="@style/Home"/>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
