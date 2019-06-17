@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="10dp"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:id="@+id/ijp_card"
+        android:layout_height="wrap_content"
+        app:cardElevation="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:drawableLeft="@drawable/ic_cust_name_24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:id="@+id/name"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp"
+                    android:textSize="18sp"
+                    android:drawablePadding="10dp"
+                    android:text="Rahul"/>
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name"
+                    android:layout_marginBottom="6dp"
+                    android:drawableLeft="@drawable/ic_home_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:text="Address"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp" />
+                <TextView
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/ic_date_range_black_24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/date"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="3dp"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="6dp"
+                    android:text="28/06/1998"
+                    android:textColor="@color/colorBlack"/>
+                <TextView
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/ic_amt_24dp"
+                    android:textSize="16sp"
+                    android:layout_below="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/amount"
+                    android:text="$10"
+                    android:textColor="@color/colorBlack"/>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/address"
+                    android:layout_height="wrap_content">
+
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:id="@+id/accept"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/button_rounded"
+                        android:layout_height="35dp"
+                        android:text="Accept"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:id="@+id/reject"
+                        android:layout_toRightOf="@+id/accept"
+                        android:background="@drawable/button_rounded"
+                        android:backgroundTint="#e0e0e0"
+                        android:text="Reject"/>
+
+
+                </RelativeLayout>
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                <!--</LinearLayout>-->
+
+
+
+            </RelativeLayout>
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="end|bottom"-->
+                <!--&gt;-->
+
+
+                <!--<TextView-->
+                    <!--android:textColor="@android:color/holo_green_dark"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:id="@+id/accept"-->
+                    <!--android:textSize="15sp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Accept"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_toLeftOf="@id/reject"-->
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:textSize="15sp"-->
+                    <!--android:id="@+id/reject"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:textColor="@android:color/holo_red_dark"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Reject"-->
+                    <!--android:layout_alignParentRight="true" />-->
+
+            <!--</RelativeLayout>-->
+
+
+        </RelativeLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
+

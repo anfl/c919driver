@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="match_parent"
+    tools:context=".SplashActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:text="Smart Mobile Laundry"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/splash_txt"
+            android:layout_centerHorizontal="true"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/amita"
+            />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:id="@+id/splash_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_height="100dp"
+            android:layout_below="@+id/splash_txt"
+            android:src="@drawable/dlogo4" />
+
+
+    </RelativeLayout>
+
+
+    <com.eyalbira.loadingdots.LoadingDots xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        app:LoadingDots_auto_play="true"
+        app:LoadingDots_dots_color="@color/colorPrimary"
+        app:LoadingDots_dots_count="5"
+        app:LoadingDots_dots_size="12sp"
+        app:LoadingDots_dots_space="8dp"
+        app:LoadingDots_jump_duration="250"
+        android:layout_alignParentBottom="true"
+        app:LoadingDots_jump_height="24dp"
+        app:LoadingDots_loop_duration="1000"
+        app:LoadingDots_loop_start_delay="100"
+        tools:layout_editor_absoluteX="167dp"
+        tools:layout_editor_absoluteY="236dp" />
+
+
+
+</RelativeLayout>

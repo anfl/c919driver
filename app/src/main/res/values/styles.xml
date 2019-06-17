@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
+    <style name="MyEditTextTheme" parent="TextAppearance.AppCompat">
+        <!--EditText hint color-->
+        <item name="android:textColorHint">@color/colorPrimaryDark</item>
+        <!-- TextInputLayout text color-->
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <!-- EditText line color when EditText on-focus-->
+        <item name="colorControlNormal">@color/colorBlack</item>
+
+    </style>
+
+
+    <style name="LoginProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="progressBar" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+</resources>

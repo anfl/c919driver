@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.driverappcg19">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.hardware.camera" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Scanner_Activity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name=".BookingListActivity" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".MyFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.here.android.maps.appid"
+            android:value="zcV8l2MGvH8Y6vRwpTKY" />
+        <meta-data
+            android:name="com.here.android.maps.apptoken"
+            android:value="5vpZoktixcOdItPwEgnLeA" />
+        <meta-data
+            android:name="com.here.android.maps.license.key"
+            android:value="ItsEMSR140tSdUc/mRFUgeb0JvVtb1f8vjyjZqNgqjmXl3C7i3pKW1cZAu1oH/ddmwG0pKm+t8kwmIxc5Z6o5GgZA0GQK2Yu/avZupRvXUyAXBianIUegVKV5mf0TMWXgAmULYVbneuAWKkXKI2lN360ph99axL5/VM/D1smr08ibynJT6pcMdesyJgruGyk4Db0RiiyKA6nGZzLNnM/S3SpLxFeVnmRAAZw1GOh7UdGldxnxw+ak8tlPOvDA3s3HG0A2A5B1DgF9WUzM/QLVgkhIya258qkgY35IV/cDt0WycrnPlTJ719a73D0w+vwKZR//nyQqKAiliIK8uIWvJu86y/Od1/lPoaTgHLCJ34iD5o0zq5e45+LsG1mbowys66QJ+b0YLX6KGQUKi1YzUwZAIxmCsOZxaSsOKzlkz8VFjZ06lLna0eEMw+MkcZ8dZR3Fu7xdy5NaGOLzN4nlf1LbSEfrz5+O9lUIh5kS98UEorZmCJ2sl6JGHN6qIDQmheD75AeX6sgCygoRZmrwHxkyldS1UA+1XIzV+dOB9BbycM3tK239/pwASQDnuA6YIjgRlNZyC/oPOSOJvMTkrhZOOVPI+a1Aerq7Bb8c7WR1a+3rpYGNWSZW0yQxFMXEylWbfIlIDVEWlHt6Flnhx6EnrDX7s6teCF6wUs9JAk=" />
+
+        <service
+            android:name="com.here.android.mpa.service.MapService"
+            android:exported="false"
+            android:label="label_Name">
+            <intent-filter>
+                <action android:name="enna" />
+            </intent-filter>
+        </service>
+        <service android:name=".ForegroundService" /> <!-- <service -->
+        <!-- android:name="com.here.android.mpa.service.MapService" -->
+        <!-- android:label="HereMapService" -->
+        <!-- android:process="global.Here.Map.Service.v3" -->
+        <!-- android:exported="true" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.here.android.mpa.service.MapService.v3" > -->
+        <!-- </action> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
+        <!-- HERE Positioning Service definition. -->
+        <service
+            android:name="com.here.services.internal.LocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":remote" />
+    </application>
+
+</manifest>

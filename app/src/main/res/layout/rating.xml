@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:padding="14dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/share_exp"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/montserrat"
+        android:textAlignment="center"
+        android:text="Customer's Feedback"/>
+
+
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:id="@+id/rating_feed"
+        android:layout_marginStart="1dp"
+        android:rating="4.5"
+        android:layout_marginTop="9dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/share_exp"
+        android:progressTint="@color/colorLightYello"
+        android:progressBackgroundTint="@android:color/darker_gray"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txt_imp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/rating_feed"
+        android:fontFamily="@font/amita"
+        android:textAlignment="center"
+        android:text="Very Good"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@+id/txt_imp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat"
+        android:background="@android:color/transparent"
+        android:id="@+id/okay_feed"
+        android:textColor="@color/colorPrimary"
+        android:text="OK"/>
+
+</RelativeLayout>

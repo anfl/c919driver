@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context=".MainActivity">-->
+
+
+    <!--&lt;!&ndash; Example fragment. This can be integrated and annotated-->
+        <!--like any other android Fragment or View widget &ndash;&gt;-->
+    <!--<fragment-->
+        <!--class="com.here.android.mpa.mapping.MapFragment"-->
+        <!--android:id="@+id/mapfragment"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"/>-->
+
+
+<!--</RelativeLayout>-->
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <!-- Map Fragment embedded with the map object -->
+
+    <!--<Button-->
+        <!--android:id="@+id/naviCtrlButton"-->
+        <!--style="?android:attr/buttonStyleSmall"-->
+        <!--android:layout_gravity="right"-->
+        <!--android:text="Start"-->
+        <!--android:background="@drawable/round_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:textColor="@color/colorWhite"-->
+        <!--android:layout_height="wrap_content"-->
+    <!--/>-->
+
+    <fragment
+        android:id="@+id/mapfragment"
+        class="com.here.android.mpa.mapping.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:visibility="gone"
+            android:id="@+id/pg_bar"
+            android:layout_centerInParent="true"
+            android:theme="@style/progressBar"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="78dp"
+        android:layout_marginRight="8dp"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/locate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/colorWhite"
+            android:src="@drawable/ic_gps_fixed_black_24dp"
+            app:elevation="6dp" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/naviCtrlButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_directions_black_24dp"
+            android:layout_gravity="bottom|end"
+            android:layout_below="@+id/locate"
+            android:backgroundTint="@color/colorPrimary"
+            app:elevation="6dp"/>
+
+        <!---->
+
+
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:id="@+id/card"
+        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_height="70dp">
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:padding="4dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imgview"
+            android:layout_width="50dp"
+            android:layout_marginLeft="4dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/leftturn"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/instruction"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:maxLines="3"
+            android:layout_toRightOf="@+id/imgview"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorWhite"
+            android:layout_toLeftOf="@+id/speed"
+            android:text="Take right and go Left"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+
+        <View
+            android:layout_marginTop="10dp"
+            android:layout_width="1dp"
+            android:layout_height="115dp"
+            android:id="@+id/view"
+            android:background="@color/colorBlack"
+            android:layout_marginBottom="10dp"
+            />
+        <TextView
+            android:id="@+id/speed"
+            android:text="100km/hr"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:textAlignment="center"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="4dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/colorPrimary"
+        app:subtitleTextColor="@color/colorWhite"
+        android:background="@color/colorWhite"
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                 android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/home_txt"
+                    android:text="Home"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Get directions"
+                    android:layout_below="@+id/home_txt"
+                    android:id="@+id/get_directions"
+                    android:textColor="@color/colorWhite"
+                    />
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="50dp"
+                android:id="@+id/scanner"
+                android:src="@drawable/scanner1"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+</android.support.design.widget.CoordinatorLayout>
