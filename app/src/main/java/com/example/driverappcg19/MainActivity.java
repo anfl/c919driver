@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity  {
     int check=0;
     ProgressBar pgbar;
     TextView getdirections;
-    FloatingActionButton locate;
+    FloatingActionButton locate,weather;
+    String description,skyDescription,temperature,temperatureDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,14 @@ public class MainActivity extends AppCompatActivity  {
         toolbar = findViewById(R.id.toolbar);
         pgbar = findViewById(R.id.pg_bar);
         pgbar.setVisibility(View.VISIBLE);
+        weather = findViewById(R.id.weather);
+        getWeatherDetails();
+        weather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayWeather();
+            }
+        });
         locate = findViewById(R.id.locate);
         locate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,24 +114,12 @@ public class MainActivity extends AppCompatActivity  {
                                     JSONArray location = observations.getJSONArray("location");
 
                                     JSONObject observation = location.getJSONObject(0);
-//                                    JSONObject observation = (JSONObject) location.get(0);
 
                                     JSONArray observe = observation.getJSONArray("observation");
 
                                     JSONObject details = (JSONObject) observe.get(0);
 
-                                    Log.d("description",details.getString("description"));
-
-//                                    Log.d("description",observe.get(0).toString());
-
-//                                    Log.d("Dataas",observation.getJSONArray("observation").toString());
-
-
-//                                    String daylight = (String) observation.get("daylight");
-//                                    JSONObject description = observation.getJSONObject("description");
-
-//                                    Log.d("Dataas",observation.get("daylight").toString());
-
+                                    Log.d("description",details.toString());
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -291,6 +288,64 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    private void displayWeather(){
+
+        android.support.v7.app.AlertDialog.Builder alertbuilder = new android.support.v7.app.AlertDialog.Builder(MainActivity.this);
+        alertbuilder.setCancelable(true);
+        View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_weather,null);
+        v.setVerticalScrollBarEnabled(false);
+        alertbuilder.setView(v);
+        final android.support.v7.app.AlertDialog dialog = alertbuilder.create();
+        dialog.show();
+        TextView temp,tempdesc,skydesc;
+        temp = v.findViewById(R.id.temp);
+        tempdesc = v.findViewById(R.id.temp_desc);
+        skydesc = v.findViewById(R.id.sky_desc);
+        temp.setText(temperature);
+        tempdesc.setText(temperatureDesc);
+        skydesc.setText(skyDescription);
+
+
+    }
+
+    private void getWeatherDetails(){
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest deleteNoticeRequest = new JsonObjectRequest(Request.Method.GET, url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject observations = response.getJSONObject("observations");
+
+                            JSONArray location = observations.getJSONArray("location");
+
+                            JSONObject observation = location.getJSONObject(0);
+
+                            JSONArray observe = observation.getJSONArray("observation");
+
+                            JSONObject details = (JSONObject) observe.get(0);
+
+                            skyDescription = details.getString("skyDescription");
+                            temperature = details.getString("temperature");
+                            temperatureDesc = details.getString("temperatureDesc");
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("Error",e.getMessage());
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        queue.add(deleteNoticeRequest);
+
+    }
 
 
 
