@@ -2,6 +2,7 @@ package com.example.driverappcg19;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,17 +23,19 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     ProgressBar progressBar;
     EditText email,password;
+    SharedPreferences sharedPreferences;
     TextInputLayout email_container,password_container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.colorBlue));
         signup = findViewById(R.id.link_signup);
         email_container = findViewById(R.id.email_container);
         password_container = findViewById(R.id.password_container);
         email = findViewById(R.id.input_email);
+        sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
         password = findViewById(R.id.input_password);
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent intent = new Intent(getApplicationContext(),BookingListActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), BookingListActivity.class);
                             startActivity(intent);
                             finish();
                         }

@@ -100,7 +100,7 @@ public class Scanner_Activity extends AppCompatActivity implements ZXingScannerV
                 scannerView.setResultHandler(this);
                 scannerView.startCamera();
             }else{
-                requestPermission();
+//                requestPermission();
             }
         }
     }

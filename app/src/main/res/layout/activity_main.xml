@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="78dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.FloatingActionButton
@@ -94,6 +94,7 @@
             android:id="@+id/imgview"
             android:layout_width="50dp"
             android:layout_marginLeft="4dp"
+            android:tint="@color/colorWhite"
             android:layout_centerVertical="true"
             android:src="@drawable/leftturn"
             android:layout_height="50dp" />
@@ -126,14 +127,14 @@
             />
         <TextView
             android:id="@+id/speed"
-            android:text="100km/hr"
+            android:text="0km/hr"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:textAlignment="center"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
             android:gravity="center"/>
@@ -146,9 +147,7 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:backgroundTint="@color/colorPrimary"
-        app:subtitleTextColor="@color/colorWhite"
-        android:background="@color/colorWhite"
+        android:background="@color/colorPrimary"
         android:id="@+id/toolbar"
         android:layout_height="wrap_content">
 
@@ -185,9 +184,10 @@
 
             <ImageView
                 android:layout_width="50dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_height="50dp"
                 android:id="@+id/scanner"
+                android:tint="@color/colorWhite"
                 android:src="@drawable/scanner1"/>
 
         </RelativeLayout>

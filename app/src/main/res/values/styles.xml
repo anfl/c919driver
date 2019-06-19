@@ -11,10 +11,12 @@
 
     <style name="Home" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#fafafa</item>
-        <item name="colorPrimaryDark">#fafafa</item>
+        <item name="colorPrimary">#efefef</item>
+        <item name="colorPrimaryDark">#efefef</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
+
     </style>
 
 

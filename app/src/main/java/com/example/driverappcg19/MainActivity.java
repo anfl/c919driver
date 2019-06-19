@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String lat=getIntent().getExtras().getString("lat");
-        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+//        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         String lng=getIntent().getExtras().getString("long");
         toolbar = findViewById(R.id.toolbar);
         pgbar = findViewById(R.id.pg_bar);
@@ -107,13 +107,21 @@ public class MainActivity extends AppCompatActivity  {
                                     JSONObject observation = location.getJSONObject(0);
 //                                    JSONObject observation = (JSONObject) location.get(0);
 
-                                    Log.d("Dataas",observation.toString());
+                                    JSONArray observe = observation.getJSONArray("observation");
+
+                                    JSONObject details = (JSONObject) observe.get(0);
+
+                                    Log.d("description",details.getString("description"));
+
+//                                    Log.d("description",observe.get(0).toString());
+
+//                                    Log.d("Dataas",observation.getJSONArray("observation").toString());
 
 
 //                                    String daylight = (String) observation.get("daylight");
 //                                    JSONObject description = observation.getJSONObject("description");
 
-                                    Log.d("Dataas",observation.getString("daylight"));
+//                                    Log.d("Dataas",observation.get("daylight").toString());
 
 
                                 } catch (JSONException e) {

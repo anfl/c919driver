@@ -12,29 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:background="#efefef"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar1"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Home"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"
-                android:fontFamily="@font/montserrat"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
-        </android.support.v7.widget.Toolbar>
 
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="4dp"
-            android:layout_below="@+id/toolbar1"
             android:id="@+id/recyclerview"
             tools:listitem="@layout/booked_history_item">
 
@@ -72,16 +55,6 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
 
-        <!--<android.support.design.widget.BottomNavigationView-->
-            <!--android:id="@+id/navigation"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="#efefef"-->
-            <!--app:elevation="8dp"-->
-            <!--app:itemIconTint="@drawable/bottom_navigation_colors"-->
-            <!--app:itemTextColor="@drawable/bottom_navigation_colors"-->
-            <!--app:menu="@menu/navigation" />-->
 
 
     </RelativeLayout>
