@@ -1,12 +1,14 @@
 package com.example.driverappcg19;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -26,6 +28,7 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    SharedPreferences sharedPreferences;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +67,17 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        sharedPreferences = getActivity().getSharedPreferences("myPref",Context.MODE_PRIVATE);
+        TextView name = view.findViewById(R.id.profile_name);
+        TextView avatar = view.findViewById(R.id.avatar);
+        String first = sharedPreferences.getString("username","").substring(0,1);
+        if (first.isEmpty())
+        avatar.setText("Adithya");
+        else
+            avatar.setText(first);
+        name.setText(sharedPreferences.getString("username",""));
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

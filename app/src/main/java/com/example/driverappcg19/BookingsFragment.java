@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -85,7 +87,7 @@ public class BookingsFragment extends Fragment {
         shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
         shimmerFrameLayout.setVisibility(View.VISIBLE);
         shimmerFrameLayout.startShimmerAnimation();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Bookings");
         Query query = myRef;
         FirebaseRecyclerOptions<NewsFeedData> options =
@@ -109,24 +111,49 @@ public class BookingsFragment extends Fragment {
                 //Do settext here
                 final OnBookingAccepted onBookingAccepted = new OnBookingAccepted() {
                     @Override
-                    public void moveToNavigationPage(MainViewHolder holder, int pos, NewsFeedData model) {
+                    public void moveToNavigationPage(MainViewHolder holder, int pos, NewsFeedData model, DatabaseReference dr) {
                         Intent intent=new Intent(getActivity(),MainActivity.class);
 
                         intent.putExtra("lat",model.getLatitude());
                         intent.putExtra("long",model.getLongitude());
-
+                        intent.putExtra("key",model.getKey());
+                        Constants constants = new Constants(dr);
                         Log.e("moveToNavigationPage: ","lat"+model.getLatitude()+"   long"+model.getLongitude() );
                         startActivity(intent);
                     }
                 };
                 shimmerFrameLayout.setVisibility(View.GONE);
                 holder.inflate(model,getActivity());
+
                 holder.accept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onBookingAccepted.moveToNavigationPage(holder,position,model);
+                        final DatabaseReference dr = database.getReference("Bookings");
+                        dr.child(model.getKey()).child("accepted").setValue("true").addOnCompleteListener(
+                                new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Log.e("Success","added");
+                                            onBookingAccepted.moveToNavigationPage(holder,position,model,dr);
+                                        }else{
+                                            Log.e("failed","failed");
+                                        }
+                                    }
+                                }
+                        );
+
+
+
                     }
                 });
+
+//                holder.accept.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        onBookingAccepted.moveToNavigationPage(holder,position,model);
+//                    }
+//                });
                 holder.reject.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

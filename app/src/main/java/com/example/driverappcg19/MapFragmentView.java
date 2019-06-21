@@ -1,4 +1,5 @@
 package com.example.driverappcg19;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -42,6 +43,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,40 +64,42 @@ public class MapFragmentView {
     private FloatingActionButton m_naviControlButton;
     private Map m_map;
     TextToSpeech t1;
-    int count=0;
-    Double l1,l2;
-    GeoCoordinate final_destination,source_point;
+    int count = 0;
+    Double l1, l2;
+    GeoCoordinate final_destination, source_point;
     private NavigationManager m_navigationManager;
     private GeoBoundingBox m_geoBoundingBox;
     private Route m_route;
     private boolean m_foregroundServiceStarted;
-    TextView instructionText,speedText;
+    TextView instructionText, speedText;
     PositioningManager posManager;
     boolean paused;
+    String key;
     ProgressBar progressBar;
-    public MapFragmentView(AppCompatActivity activity, Double l1, Double l2, ProgressBar pgbar) {
+
+    public MapFragmentView(AppCompatActivity activity, Double l1, Double l2, ProgressBar pgbar, String key) {
         m_activity = activity;
-        this.l1=l1;
-        this.l2=l2;
+        this.l1 = l1;
+        this.l2 = l2;
         progressBar = pgbar;
+        this.key = key;
         initMapFragment();
 
-        t1=new TextToSpeech(m_activity, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    t1.setLanguage(Locale.UK);
-                }
-            }
-        });
+//        t1=new TextToSpeech(m_activity, new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int status) {
+//                if(status != TextToSpeech.ERROR) {
+//                    t1.setLanguage(Locale.UK);
+//                }
+//            }
+//        });
 
     }
 
 
-
     private SupportMapFragment getMapFragment() {
-        instructionText=m_activity.findViewById(R.id.instruction);
-        speedText=m_activity.findViewById(R.id.speed);
+        instructionText = m_activity.findViewById(R.id.instruction);
+        speedText = m_activity.findViewById(R.id.speed);
         return (SupportMapFragment) m_activity.getSupportFragmentManager().findFragmentById(R.id.mapfragment);
     }
 
@@ -131,9 +135,9 @@ public class MapFragmentView {
             // ensure that it does not match the default location
             // (getExternalStorageDirectory()/.here-maps).
             // Also, ensure the provided intent name does not match the default intent name.
-            System.out.println("CHECK"+"IF IN");
+            System.out.println("CHECK" + "IF IN");
         } else {
-            System.out.println("CHECK"+"IN");
+            System.out.println("CHECK" + "IN");
             if (m_mapFragment != null) {
                 /* Initialize the SupportMapFragment, results will be given via the called back. */
                 m_mapFragment.init(new OnEngineInitListener() {
@@ -206,8 +210,8 @@ public class MapFragmentView {
             e.printStackTrace();
         }
 
-        m_map.addMapObject(new MapMarker(new GeoCoordinate(source_point),image));
-        m_map.addMapObject(new MapMarker(new GeoCoordinate(l1,l2),image));
+        m_map.addMapObject(new MapMarker(new GeoCoordinate(source_point), image));
+        m_map.addMapObject(new MapMarker(new GeoCoordinate(l1, l2), image));
 
 
         /* Trigger the route calculation,results will be called back via the listener */
@@ -227,6 +231,10 @@ public class MapFragmentView {
                             if (routeResults.get(0).getRoute() != null) {
 
                                 m_route = routeResults.get(0).getRoute();
+
+
+
+
                                 /* Create a MapRoute so that it can be placed on the map */
                                 MapRoute mapRoute = new MapRoute(routeResults.get(0).getRoute());
 
@@ -240,7 +248,10 @@ public class MapFragmentView {
                                 m_map.zoomTo(m_geoBoundingBox, Map.Animation.NONE,
                                         Map.MOVE_PRESERVE_ORIENTATION);
 
+
                                 startNavigation();
+
+                                uploadSource(m_route);
                             } else {
                                 Toast.makeText(m_activity,
                                         "Error:route results returned is not valid",
@@ -323,19 +334,23 @@ public class MapFragmentView {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
         alertDialogBuilder.setTitle("Navigation");
         alertDialogBuilder.setMessage("Choose Mode");
-        alertDialogBuilder.setNegativeButton("Navigation",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("Navigation", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialoginterface, int i) {
                 m_navigationManager.startNavigation(m_route);
                 m_map.setTilt(60);
                 startForegroundService();
-            };
+            }
+
+            ;
         });
-        alertDialogBuilder.setPositiveButton("Simulation",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton("Simulation", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialoginterface, int i) {
-                m_navigationManager.simulate(m_route,40);//Simualtion speed is set to 60 m/s
+                m_navigationManager.simulate(m_route, 40);//Simualtion speed is set to 60 m/s
                 m_map.setTilt(60);
                 startForegroundService();
-            };
+            }
+
+            ;
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -379,11 +394,11 @@ public class MapFragmentView {
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-            Log.e( "onPositionUpdated: ",position.getTimestamp().toString() );
+            Log.e("onPositionUpdated: ", position.getTimestamp().toString());
 
-            speedText.setText(position.getSpeed()+"KM/Hour");
+            speedText.setText(position.getSpeed() + "KM/Hour");
             DatabaseReference myRef = database.getReference("message");
-            myRef.child("latitude").setValue(position.getCoordinate().getLatitude()+"");
+            myRef.child("latitude").setValue(position.getCoordinate().getLatitude() + "");
             myRef.child("longitude").setValue(position.getCoordinate().getLongitude());
         }
     };
@@ -435,21 +450,21 @@ public class MapFragmentView {
         @Override
         public void onNewInstructionEvent() {
             super.onNewInstructionEvent();
-            Maneuver maneuver= m_navigationManager.getNextManeuver();
+            Maneuver maneuver = m_navigationManager.getNextManeuver();
 
             Maneuver.Turn turn = maneuver.getTurn();
-            String turnName=turn.name();
+            String turnName = turn.name();
             int distance = maneuver.getDistanceFromPreviousManeuver();
             String nextRoadName = maneuver.getNextRoadName();
-            instructionText.setText("Take a "+turnName+"to the "+nextRoadName+" in "+distance+"mts");
-            Log.e("ins",nextRoadName);
-            instructionText.setText("Will take a "+turnName+"to the "+nextRoadName+" in "+distance+"mts");
+            instructionText.setText("Take a " + turnName + "to the " + nextRoadName + " in " + distance + "mts");
+            Log.e("ins", nextRoadName);
+            instructionText.setText("Will take a " + turnName + "to the " + nextRoadName + " in " + distance + "mts");
 
 
-            String a="Take a "+turnName+"to the "+nextRoadName+" in "+distance+"meters";
-            t1.speak(a,TextToSpeech.QUEUE_FLUSH, null);
-
-            ImageView img=m_activity.findViewById(R.id.imgview);
+            String a = "Take a " + turnName + "to the " + nextRoadName + " in " + distance + "meters";
+//            t1.speak(a,TextToSpeech.QUEUE_FLUSH, null);
+            getVoice();
+            ImageView img = m_activity.findViewById(R.id.imgview);
             if (turnName.toLowerCase().contains("right"))
                 img.setImageResource(R.drawable.rightturn);
             else
@@ -459,7 +474,6 @@ public class MapFragmentView {
     };
 
 
-
     private PositioningManager.OnPositionChangedListener positionListener = new
             PositioningManager.OnPositionChangedListener() {
 
@@ -467,19 +481,17 @@ public class MapFragmentView {
                                               GeoPosition position, boolean isMapMatched) {
                     // set the center only when the app is in the foreground
                     // to reduce CPU consumption
-                        m_map.setCenter(position.getCoordinate(),
-                                Map.Animation.BOW);
+                    m_map.setCenter(position.getCoordinate(),
+                            Map.Animation.BOW);
 
 
+                    source_point = position.getCoordinate();
 
-                        source_point=position.getCoordinate();
 
-
-                    if (count==0){
+                    if (count == 0) {
                         showRoute();
                     }
                     count++;
-
 
 
                 }
@@ -490,12 +502,12 @@ public class MapFragmentView {
                 }
             };
 
-    private void showRoute(){
+    private void showRoute() {
         // Declare the variable (the CoreRouter)
         CoreRouter router = new CoreRouter();
         RoutePlan routePlan = new RoutePlan();
         routePlan.addWaypoint(new RouteWaypoint(new GeoCoordinate(source_point)));
-        routePlan.addWaypoint(new RouteWaypoint(new GeoCoordinate(l1,l2)));
+        routePlan.addWaypoint(new RouteWaypoint(new GeoCoordinate(l1, l2)));
         router.calculateRoute(routePlan, new RouteListener());
 
         com.here.android.mpa.common.Image image = new com.here.android.mpa.common.Image();
@@ -506,8 +518,8 @@ public class MapFragmentView {
             e.printStackTrace();
         }
 
-        m_map.addMapObject(new MapMarker(new GeoCoordinate(source_point),image));
-        m_map.addMapObject(new MapMarker(new GeoCoordinate(l1,l2),image));
+        m_map.addMapObject(new MapMarker(new GeoCoordinate(source_point), image));
+        m_map.addMapObject(new MapMarker(new GeoCoordinate(l1, l2), image));
 
 
     }
@@ -526,11 +538,79 @@ public class MapFragmentView {
                 // Render the route on the map
                 MapRoute mapRoute = new MapRoute(routeResult.get(0).getRoute());
                 m_map.addMapObject(mapRoute);
-            }
-            else {
+            } else {
                 // Display a message indicating route calculation failure
             }
         }
+
+    }
+
+    private void getVoice() {
+        final VoiceCatalog voiceCatalog = VoiceCatalog.getInstance();
+        voiceCatalog.downloadCatalog(new VoiceCatalog.OnDownloadDoneListener() {
+            @Override
+            public void onDownloadDone(VoiceCatalog.Error error) {
+                if (error == VoiceCatalog.Error.NONE) {
+                    Log.e("catalog", "downloadSuccessful");
+                    List<VoicePackage> voicePackages = voiceCatalog.getCatalogList();
+
+                    long id = -1;
+
+// select
+                    for (VoicePackage vPackage : voicePackages) {
+                        if (vPackage.getMarcCode().compareToIgnoreCase("eng") == 0) {
+                            if (vPackage.isTts()) {
+                                id = vPackage.getId();
+                                break;
+                            }
+                        }
+                    }
+                    if (!voiceCatalog.isLocalVoiceSkin(id)) {
+                        final long finalId = id;
+                        voiceCatalog.downloadVoice(id, new VoiceCatalog.OnDownloadDoneListener() {
+                            @Override
+                            public void onDownloadDone(VoiceCatalog.Error error) {
+                                Log.e("voiceskin", "voiceskinDownloadsuccess");
+
+                            }
+
+                        });
+                    } else if (voiceCatalog.isLocalVoiceSkin(id)) {
+                        VoiceGuidanceOptions voiceGuidanceOptions = m_navigationManager.getVoiceGuidanceOptions();
+                        voiceGuidanceOptions.setVoiceSkin(voiceCatalog.getLocalVoiceSkin(id));
+
+
+                    }
+
+
+                }
+            }
+        });
+    }
+
+
+    public void uploadSource(Route m_route){
+        Route.SerializationCallback sCallback = new Route.SerializationCallback() {
+            @Override
+            public void onSerializationComplete(Route.SerializationResult serializationResult) {
+
+                // Log.d("Error",serializationResult.error.name());
+
+                Log.d("onSerializaion","serialization");
+                Toast.makeText(m_activity, key+"keyvalue", Toast.LENGTH_SHORT).show();
+                byte[] data = serializationResult.data;
+                DatabaseReference dr = Constants.getDatabaseReference();
+                String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+//                                        if (base64.isEmpty())
+//                                            Log.d("resultbase","empty");
+                Log.d("Base: ", base64);
+                FirebaseDatabase.getInstance().getReference("Bookings").child(key).child("base64").setValue(base64);
+
+//                                        dr.child(key).child("base64").setValue(data.toString());
+
+            }
+        };
+        Route.serializeAsync(m_route, sCallback);
     }
 
 }

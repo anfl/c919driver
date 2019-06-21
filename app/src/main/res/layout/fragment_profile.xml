@@ -51,12 +51,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ImgUser"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/montserrat"
                 android:text="Adithya"
                 android:textColor="@color/colorWhite"
                 android:textSize="24sp"
-                android:layout_marginBottom="10dp"
                 android:textStyle="bold">
 
             </TextView>

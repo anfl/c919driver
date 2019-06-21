@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DatabaseReference;
 import com.google.gson.JsonArray;
 import com.google.zxing.Result;
 import com.here.android.mpa.common.GeoCoordinate;
@@ -78,13 +79,14 @@ public class MainActivity extends AppCompatActivity  {
     ProgressBar pgbar;
     TextView getdirections;
     FloatingActionButton locate,weather;
-    String description,skyDescription,temperature,temperatureDesc;
+    String key,skyDescription,temperature,temperatureDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String lat=getIntent().getExtras().getString("lat");
+        key=getIntent().getExtras().getString("key");
 //        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         String lng=getIntent().getExtras().getString("long");
         toolbar = findViewById(R.id.toolbar);
@@ -249,7 +251,7 @@ public class MainActivity extends AppCompatActivity  {
         // All permission requests are being handled. Create map fragment view. Please note
         // the HERE SDK requires all permissions defined above to operate properly.
 
-        m_mapFragmentView = new MapFragmentView(this,l1,l2,pgbar);
+        m_mapFragmentView = new MapFragmentView(this,l1,l2,pgbar,key);
     }
 
     @Override

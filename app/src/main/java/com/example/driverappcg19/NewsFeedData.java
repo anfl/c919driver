@@ -6,7 +6,7 @@ package com.example.driverappcg19;
 
 public class NewsFeedData
 {
-    String name,address,date,amount,latitude,longitude;
+    String name,address,date,amount,latitude,longitude,count,key;
 
     public String getLatitude() {
         return latitude;
@@ -16,13 +16,15 @@ public class NewsFeedData
         return longitude;
     }
 
-    public NewsFeedData(String name, String address, String date, String amount,String latitude,String longitude) {
+    public NewsFeedData(String name, String address, String date, String amount,String latitude,String longitude,String count,String key) {
         this.name = name;
         this.address = address;
         this.date = date;
         this.amount = amount;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.count = count;
+        this.key = key;
     }
 
     public NewsFeedData(){
@@ -59,6 +61,22 @@ public class NewsFeedData
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

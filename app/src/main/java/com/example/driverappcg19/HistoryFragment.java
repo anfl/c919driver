@@ -1,12 +1,25 @@
 package com.example.driverappcg19;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 
 /**
@@ -26,6 +39,9 @@ public class HistoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    RecyclerView recyclerView;
+    ShimmerFrameLayout shimmerFrameLayout;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +80,65 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View v = inflater.inflate(R.layout.fragment_bookings, container, false);
+        recyclerView=v.findViewById(R.id.recyclerview);
+        shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("Bookings");
+        Query query = myRef;
+        FirebaseRecyclerOptions<NewsFeedData> options =
+                new FirebaseRecyclerOptions.Builder<NewsFeedData>()
+                        .setQuery(query,  NewsFeedData.class)
+                        .setLifecycleOwner(this)
+                        .build();
+        final FirebaseRecyclerAdapter firebaseRecyclerAdapter;
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<NewsFeedData, MainViewHolder>(options) {
+            @Override
+            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+                View view = getLayoutInflater()
+                        .inflate(R.layout.recycler_history, parent,false);
+
+                return new MainViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(final MainViewHolder holder, final int position, final NewsFeedData model) {
+                //Do settext here
+                final OnBookingAccepted onBookingAccepted = new OnBookingAccepted() {
+                    @Override
+                    public void moveToNavigationPage(MainViewHolder holder, int pos, NewsFeedData model, DatabaseReference dr) {
+                        Intent intent=new Intent(getActivity(),MainActivity.class);
+
+                        intent.putExtra("lat",model.getLatitude());
+                        intent.putExtra("long",model.getLongitude());
+
+                        Log.e("moveToNavigationPage: ","lat"+model.getLatitude()+"   long"+model.getLongitude() );
+                        startActivity(intent);
+                    }
+                };
+                shimmerFrameLayout.setVisibility(View.GONE);
+                holder.inflate(model,getActivity());
+            }
+
+            @Override
+            public void onDataChanged() {
+                super.onDataChanged();
+                Log.e("Data","Got DAta");
+            }
+
+            @Override
+            public void onError(@NonNull DatabaseError error) {
+                super.onError(error);
+                Log.e("Error",error.getMessage());
+            }
+        };
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +178,22 @@ public class HistoryFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
+        super.onResume();
     }
 }
